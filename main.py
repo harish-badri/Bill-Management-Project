@@ -12,6 +12,9 @@ def total():
    totalcosmeticprice=soapprice+facecreamprice+facewashprice+hairsprayprice+hairgelprice+bodylotionprice
    cosmeticpriceEntry.delete(0,END)
    cosmeticpriceEntry.insert(0,f'{totalcosmeticprice} Rs')
+   cosmetictax=totalcosmeticprice*0.12
+   cosmetictaxEntry.delete(0,END)
+   cosmetictaxEntry.insert(0,str(cosmetictax)+'Rs')
 
    #grocery price
    riceprice=int(riceEntry.get())*20
@@ -24,7 +27,9 @@ def total():
    totalgroceryprice=riceprice+daalprice+oilprice+sugarprice+teaprice+wheatprice
    grocerypriceEntry.delete(0,END)
    grocerypriceEntry.insert(0,f'{totalgroceryprice} Rs')
-
+   grocerytax = totalgroceryprice * 0.12
+   grocerytaxEntry.delete(0, END)
+   grocerytaxEntry.insert(0, str(grocerytax) + 'Rs')
 
    #drinks price
    fantaprice=int(fantaEntry.get())*30
@@ -37,6 +42,9 @@ def total():
    totaldrinksprice=fantaprice+Pepsiprice+spriteprice+redbullprice+frootiprice+cococolaprice
    drinkspriceEntry.delete(0,END)
    drinkspriceEntry.insert(0,f'{totaldrinksprice} Rs')
+   drinkstax = totaldrinksprice * 0.12
+   drinkstaxEntry.delete(0, END)
+   drinkstaxEntry.insert(0, str(drinkstax) + 'Rs')
 
 root=Tk()
 root.title('Retail Billing System')
