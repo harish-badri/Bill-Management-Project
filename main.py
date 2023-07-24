@@ -1,8 +1,89 @@
 from tkinter import *
+from tkinter import messagebox
+import random
+
+billnumber=random.randint(500,1000)
+def bill_area():
+    #if nameEntry.get()=='' or phoneEntry.get()=='':
+   #     messagebox.showerror('Error','Customer Details are Required')
+   # elif cosmeticpriceEntry.get()=='' and grocerypriceEntry.get()=='' and drinkspriceEntry.get()=='':
+   #     messagebox.showerror('Error','No Products are selected')
+   # elif cosmeticpriceEntry.get()=='0 Rs' and grocerypriceEntry.get()=='0 Rs' and drinkspriceEntry.get()=='0 Rs':
+   #     messagebox.showerror('Error','No Products are selected')
+        textarea.delete(1.0, END)
+        textarea.insert(END, '\t\t** Welcome Customer **\n')
+        textarea.insert(END, f'\nBill Number: {billnumber}\n')
+        textarea.insert(END, f'\nCustomer Name: {nameEntry.get()}\n')
+        textarea.insert(END, f'\nPhone Number: {phoneEntry.get()}\n')
+        textarea.insert(END, '\n============================================================')
+        textarea.insert(END, '  Product\t\t\tQuantity\t\t\tPrice')
+        textarea.insert(END, '\n============================================================')
+        # Cosmetics Prices
+        if bathsoapEntry.get() != '0':
+            textarea.insert(END, f'\n  Bath Soap\t\t\t{bathsoapEntry.get()}\t\t\t{soapprice} Rs')
+        if facecreamEntry.get() != '0':
+            textarea.insert(END, f'\n  Face Cream\t\t\t{facecreamEntry.get()}\t\t\t{facecreamprice} Rs')
+        if facewashEntry.get() != '0':
+            textarea.insert(END, f'\n  Face Wash\t\t\t{facewashEntry.get()}\t\t\t{facewashprice} Rs')
+        if hairsprayEntry.get() != '0':
+            textarea.insert(END, f'\n  Hair Spray\t\t\t{hairsprayEntry.get()}\t\t\t{hairsprayprice} Rs')
+        if hairgelEntry.get() != '0':
+            textarea.insert(END, f'\n  Hair Gel\t\t\t{hairgelEntry.get()}\t\t\t{hairgelprice} Rs')
+        if bodylotionEntry.get() != '0':
+            textarea.insert(END, f'\n  Body Lotion\t\t\t{bodylotionEntry.get()}\t\t\t{bodylotionprice} Rs')
+
+        # Grocery Prices
+        if riceEntry.get() != '0':
+            textarea.insert(END, f'\n  Rice\t\t\t{riceEntry.get()}\t\t\t{riceprice} Rs')
+        if daalEntry.get() != '0':
+            textarea.insert(END, f'\n  Daal\t\t\t{daalEntry.get()}\t\t\t{daalprice} Rs')
+        if oilEntry.get() != '0':
+            textarea.insert(END, f'\n  Oil\t\t\t{oilEntry.get()}\t\t\t{oilprice} Rs')
+        if sugarEntry.get() != '0':
+            textarea.insert(END, f'\n  Sugar\t\t\t{sugarEntry.get()}\t\t\t{sugarprice} Rs')
+        if teaEntry.get() != '0':
+            textarea.insert(END, f'\n  Tea\t\t\t{teaEntry.get()}\t\t\t{teaprice} Rs')
+        if wheatEntry.get() != '0':
+            textarea.insert(END, f'\n  Wheat\t\t\t{wheatEntry.get()}\t\t\t{wheatprice} Rs')
+
+        # Drinks Prices
+        if fantaEntry.get() != '0':
+            textarea.insert(END, f'\n  Fanta\t\t\t{fantaEntry.get()}\t\t\t{fantaprice} Rs')
+        if PepsiEntry.get() != '0':
+            textarea.insert(END, f'\n  Pepsi\t\t\t{PepsiEntry.get()}\t\t\t{Pepsiprice} Rs')
+        if spriteEntry.get() != '0':
+            textarea.insert(END, f'\n  Sprite\t\t\t{spriteEntry.get()}\t\t\t{spriteprice} Rs')
+        if redbullEntry.get() != '0':
+            textarea.insert(END, f'\n  Red Bull\t\t\t{redbullEntry.get()}\t\t\t{redbullprice} Rs')
+        if frootiEntry.get() != '0':
+            textarea.insert(END, f'\n  Frooti\t\t\t{frootiEntry.get()}\t\t\t{frootiprice} Rs')
+        if cococolaEntry.get() != '0':
+            textarea.insert(END, f'\n  Coco Cola\t\t\t{cococolaEntry.get()}\t\t\t{cococolaprice} Rs')
+
+        textarea.insert(END, '\n------------------------------------------------------------')
+
+        # taxbill
+        if cosmetictaxEntry.get() != '0.0 Rs':
+            textarea.insert(END, f'\n  Cosmetic Tax\t\t\t\t{cosmetictaxEntry.get()} Rs')
+        if grocerytaxEntry.get() != '0.0 Rs':
+            textarea.insert(END, f'\n  Grocery Tax\t\t\t\t{grocerytaxEntry.get()} Rs')
+        if drinkstaxEntry.get() != '0.0 Rs':
+            textarea.insert(END, f'\n  Drinks Tax\t\t\t\t{drinkstaxEntry.get()} Rs')
+
+        textarea.insert(END, '\n------------------------------------------------------------')
+        textarea.insert(END, f'\n  Total Bill \t\t\t\t{totalbill} Rs')
+        textarea.insert(END, '\n------------------------------------------------------------')
+
+
+
 
 def total():
+   global soapprice,facecreamprice,facewashprice,hairsprayprice,hairgelprice,bodylotionprice
+   global riceprice,daalprice,oilprice,sugarprice,teaprice,wheatprice
+   global fantaprice,Pepsiprice,spriteprice,redbullprice,frootiprice,cococolaprice
+   global totalbill
     #cosmetic price
-   soapprice=int(bathsoapEntry.get())*20
+   soapprice=int(bathsoapEntry.get())* 20
    facecreamprice=int(facecreamEntry.get())*50
    facewashprice = int(facewashEntry.get()) * 40
    hairsprayprice = int(hairsprayEntry.get()) * 60
@@ -17,7 +98,7 @@ def total():
    cosmetictaxEntry.insert(0,str(cosmetictax)+'Rs')
 
    #grocery price
-   riceprice=int(riceEntry.get())*20
+   riceprice=int(riceEntry.get())* 20
    daalprice = int(daalEntry.get()) * 30
    oilprice = int(oilEntry.get()) * 40
    sugarprice = int(sugarEntry.get()) * 60
@@ -45,6 +126,9 @@ def total():
    drinkstax = totaldrinksprice * 0.12
    drinkstaxEntry.delete(0, END)
    drinkstaxEntry.insert(0, str(drinkstax) + 'Rs')
+
+   #total bill
+   totalbill=totalcosmeticprice+totalgroceryprice+totaldrinksprice+cosmetictax+grocerytax+drinkstax
 
 root=Tk()
 root.title('Retail Billing System')
@@ -291,7 +375,7 @@ buttonFrame.grid(row=0,column=4,rowspan=3)
 totalButton=Button(buttonFrame,text='Total',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10,command=total)
 totalButton.grid(row=0,column=0,pady=20,padx=5)
 
-billButton=Button(buttonFrame,text='Bill',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10)
+billButton=Button(buttonFrame,text='Bill',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10,command=bill_area)
 billButton.grid(row=0,column=1,pady=20,padx=5)
 
 emailButton=Button(buttonFrame,text='Email',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10)
