@@ -1,6 +1,22 @@
+import os
 from tkinter import *
 from tkinter import messagebox
 import random
+
+if not os.path.exists('bills'):
+    os.mkdir('bills')
+def save_bill():
+    global billnumber
+    result=messagebox.askyesno('comfirm','Do you want to save the bill?')
+    if result:
+        bill_content=textarea.get(1.0,END)
+        file=open(f'bills/ {billnumber}.txt','w')
+        file.write(bill_content)
+        file.close()
+        messagebox.showinfo('Success',f'bill number {billnumber} is saved successfully')
+        billnumber=random.randint(500,1000)
+
+
 
 billnumber=random.randint(500,1000)
 def bill_area():
@@ -73,7 +89,7 @@ def bill_area():
         textarea.insert(END, '\n------------------------------------------------------------')
         textarea.insert(END, f'\n  Total Bill \t\t\t\t{totalbill} Rs')
         textarea.insert(END, '\n------------------------------------------------------------')
-
+        save_bill()
 
 
 
