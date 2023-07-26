@@ -1,7 +1,91 @@
 import os
 from tkinter import *
 from tkinter import messagebox
-import random
+import random,tempfile
+
+def search_bill():
+    for i in os.listdir('bills/'):
+        if i.split('.')[0] == billnumberEntry.get():
+            f = open(f'bills/{i}', 'r')
+            textarea.delete(1.0, END)
+            for d in f:
+                textarea.insert(END, d)
+            f.close()
+            break
+    else:
+        messagebox.showerror('Error','Invalid Bill Number')
+
+def print_bill():
+    if textarea.get(1.0,END)=='\n':
+        messagebox.showerror('Error','Bill is empty')
+    else:
+        file=tempfile.mktemp('.txt')
+        open(file,'w').write(textarea.get(1.0,END))
+        os.startfile(file,'print')
+
+def clear():
+    #cosmetics deletion & insertion
+    bathsoapEntry.delete(0,END)
+    facewashEntry.delete(0,END)
+    facecreamEntry.delete(0,END)
+    bodylotionEntry.delete(0,END)
+    hairgelEntry.delete(0,END)
+    hairsprayEntry.delete(0,END)
+
+    bathsoapEntry.insert(0,0)
+    facewashEntry.insert(0,0)
+    facecreamEntry.insert(0,0)
+    bodylotionEntry.insert(0,0)
+    hairgelEntry.insert(0,0)
+    hairsprayEntry.insert(0,0)
+
+    #grocery deletion & insertion
+    daalEntry.delete(0,END)
+    wheatEntry.delete(0,END)
+    riceEntry.delete(0,END)
+    oilEntry.delete(0,END)
+    sugarEntry.delete(0,END)
+    teaEntry.delete(0,END)
+
+    daalEntry.insert(0,0)
+    wheatEntry.insert(0,0)
+    riceEntry.insert(0,0)
+    oilEntry.insert(0,0)
+    sugarEntry.insert(0,0)
+    teaEntry.insert(0,0)
+
+    #drinks deletion & insertion
+    cococolaEntry.delete(0,END)
+    PepsiEntry.delete(0,END)
+    redbullEntry.delete(0,END)
+    spriteEntry.delete(0,END)
+    frootiEntry.delete(0,END)
+    fantaEntry.delete(0,END)
+
+    cococolaEntry.insert(0,0)
+    PepsiEntry.insert(0,0)
+    redbullEntry.insert(0,0)
+    spriteEntry.insert(0,0)
+    frootiEntry.insert(0,0)
+    fantaEntry.insert(0,0)
+
+    #taxs deletion
+    cosmetictaxEntry.delete(0,END)
+    grocerytaxEntry.delete(0, END)
+    drinkstaxEntry.delete(0, END)
+
+    #price deletion
+    cosmeticpriceEntry.delete(0, END)
+    grocerypriceEntry.delete(0, END)
+    drinkspriceEntry.delete(0, END)
+
+    #customer details deletion
+    nameEntry.delete(0, END)
+    phoneEntry.delete(0, END)
+    billnumberEntry.delete(0, END)
+
+    #bill area deletion
+    textarea.delete(1.0,END)
 
 if not os.path.exists('bills'):
     os.mkdir('bills')
@@ -20,12 +104,13 @@ def save_bill():
 
 billnumber=random.randint(500,1000)
 def bill_area():
-    #if nameEntry.get()=='' or phoneEntry.get()=='':
-   #     messagebox.showerror('Error','Customer Details are Required')
-   # elif cosmeticpriceEntry.get()=='' and grocerypriceEntry.get()=='' and drinkspriceEntry.get()=='':
-   #     messagebox.showerror('Error','No Products are selected')
-   # elif cosmeticpriceEntry.get()=='0 Rs' and grocerypriceEntry.get()=='0 Rs' and drinkspriceEntry.get()=='0 Rs':
-   #     messagebox.showerror('Error','No Products are selected')
+    if nameEntry.get()=='' or phoneEntry.get()=='':
+        messagebox.showerror('Error','Customer Details are Required')
+    elif cosmeticpriceEntry.get()=='' and grocerypriceEntry.get()=='' and drinkspriceEntry.get()=='':
+        messagebox.showerror('Error','No Products are selected')
+    elif cosmeticpriceEntry.get()=='0 Rs' and grocerypriceEntry.get()=='0 Rs' and drinkspriceEntry.get()=='0 Rs':
+        messagebox.showerror('Error','No Products are selected')
+    else:
         textarea.delete(1.0, END)
         textarea.insert(END, '\t\t** Welcome Customer **\n')
         textarea.insert(END, f'\nBill Number: {billnumber}\n')
@@ -178,7 +263,7 @@ billnumberLabel.grid(row=0,column=4,padx=20,pady=2)
 billnumberEntry=Entry(customer_details_frame,font=('arial',15),bd=7,width=18)
 billnumberEntry.grid(row=0,column=5,padx=8)
 
-searchButton=Button(customer_details_frame,text='SEARCH',font=('arial',12,'bold'),bd=7)
+searchButton=Button(customer_details_frame,text='SEARCH',font=('arial',12,'bold'),bd=7,command=search_bill)
 searchButton.grid(row=0,column=6,padx=20,pady=8)
 
 productsFrame=Frame(root)
@@ -397,10 +482,10 @@ billButton.grid(row=0,column=1,pady=20,padx=5)
 emailButton=Button(buttonFrame,text='Email',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10)
 emailButton.grid(row=0,column=2,pady=20,padx=5)
 
-printButton=Button(buttonFrame,text='Print',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10)
+printButton=Button(buttonFrame,text='Print',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10,command=print_bill)
 printButton.grid(row=0,column=3,pady=20,padx=5)
 
-clearButton=Button(buttonFrame,text='Clear',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10)
+clearButton=Button(buttonFrame,text='Clear',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10,command=clear)
 clearButton.grid(row=0,column=4,pady=20,padx=5)
 
 
