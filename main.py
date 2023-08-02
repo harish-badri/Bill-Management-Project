@@ -1,91 +1,88 @@
-import os
+import tempfile
 from tkinter import *
 from tkinter import messagebox
-import random,tempfile
+import random,os,tempfile,smtplib
+
+def send_email():
+    def send_gmail():
+        try:
+             ob=smtplib.SMTP('smtp.gmail.com',587)
+             ob.starttls()
+             ob.login(senderEntry.get(),passwordEntry.get())
+             message=email_textarea.get(1.0,END)
+             ob.sendmail(senderEntry.get(),recievEntry.get(),message)
+             ob.quit()
+             messagebox.showinfo('Success','Bill is successfully sent',parent=root1)
+        except:
+             messagebox.showerror('Error','something went wrong,Please try again',parent=root1)
+    if textarea.get(1.0, END) == '\n':
+        messagebox.showerror('Error', 'Bill is empty')
+    else:
+        root1=Toplevel()
+        root1.title('Send gmail')
+        root1.config(bg='gray20')
+        root1.resizable(0,0)
+
+        senderFrame=LabelFrame(root1,text='SENDER',font=('arial',16,'bold'),bd=6,bg='gray20',fg='white')
+        senderFrame.grid(row=0,column=0,padx=40,pady=20)
+
+        senderLabel=Label(senderFrame,text="Email",font=('arial',14,'bold'),bd=6,bg='gray20',fg='white')
+        senderLabel.grid(row=0,column=0,padx=10,pady=8)
+
+        senderEntry=Entry(senderFrame,font=('arial',14,'bold'),bd=2,width=23,relief=RIDGE)
+        senderEntry.grid(row=0,column=1,padx=10,pady=8)
+
+
+        passwordLabel = Label(senderFrame, text="Password", font=('arial', 14, 'bold'), bd=6, bg='gray20', fg='white')
+        passwordLabel.grid(row=1, column=0, padx=10, pady=8)
+
+        passwordEntry = Entry(senderFrame, font=('arial', 14, 'bold'), bd=2, width=23, relief=RIDGE,show='*')
+        passwordEntry.grid(row=1, column=1, padx=10, pady=8)
+
+
+        recipientFrame = LabelFrame(root1, text='RECIPIENT', font=('arial', 16, 'bold'), bd=6, bg='gray20', fg='white')
+        recipientFrame.grid(row=1, column=0, padx=40, pady=20)
+
+
+        recievLabel = Label(recipientFrame, text="Email Address", font=('arial', 14, 'bold'), bd=6, bg='gray20', fg='white')
+        recievLabel.grid(row=0, column=0, padx=10, pady=8)
+
+        recievEntry = Entry(recipientFrame, font=('arial', 14, 'bold'), bd=2, width=23, relief=RIDGE)
+        recievEntry.grid(row=0, column=1, padx=10, pady=8)
+
+
+        messageLabel = Label(recipientFrame, text="Message", font=('arial', 14, 'bold'), bd=6, bg='gray20', fg='white')
+        messageLabel.grid(row=1, column=0, padx=10, pady=8)
+
+        email_textarea=Text(recipientFrame,font=('arial',14,'bold'),bd=2,relief=SUNKEN,width=42,height=11)
+        email_textarea.grid(row=2,column=0,columnspan=2)
+        email_textarea.delete(1.0,END)
+        email_textarea.insert(END,textarea.get(1.0,END).replace('=','').replace('-','').replace('\t\t\t','\t\t'))
+
+        sendButton=Button(root1,text='SEND',font=('arial',16,'bold'),width=15,command=send_gmail)
+        sendButton.grid(row=2,column=0,pady=20)
+
+        root1.mainloop()
+def print_bill():
+     if textarea.get(1.0,END)=='\n':
+         messagebox.showerror('Error','Bill is empty')
+     else:
+         file=tempfile.mktemp('.txt')
+         open(file,'w').write(textarea.get(1.0,END))
+         os.startfile(file,'print')
 
 def search_bill():
     for i in os.listdir('bills/'):
-        if i.split('.')[0] == billnumberEntry.get():
-            f = open(f'bills/{i}', 'r')
-            textarea.delete(1.0, END)
-            for d in f:
-                textarea.insert(END, d)
-            f.close()
-            break
+       if i.split('.')[0]==billnumberEntry.get():
+           f=open(f'bills/{i}','r')
+           textarea.delete(1.0,END)
+           for data in f:
+                textarea.insert(END,data)
+           f.close()
+           break
     else:
-        messagebox.showerror('Error','Invalid Bill Number')
+       messagebox.showerror('Error','Invalid Bill Number')
 
-def print_bill():
-    if textarea.get(1.0,END)=='\n':
-        messagebox.showerror('Error','Bill is empty')
-    else:
-        file=tempfile.mktemp('.txt')
-        open(file,'w').write(textarea.get(1.0,END))
-        os.startfile(file,'print')
-
-def clear():
-    #cosmetics deletion & insertion
-    bathsoapEntry.delete(0,END)
-    facewashEntry.delete(0,END)
-    facecreamEntry.delete(0,END)
-    bodylotionEntry.delete(0,END)
-    hairgelEntry.delete(0,END)
-    hairsprayEntry.delete(0,END)
-
-    bathsoapEntry.insert(0,0)
-    facewashEntry.insert(0,0)
-    facecreamEntry.insert(0,0)
-    bodylotionEntry.insert(0,0)
-    hairgelEntry.insert(0,0)
-    hairsprayEntry.insert(0,0)
-
-    #grocery deletion & insertion
-    daalEntry.delete(0,END)
-    wheatEntry.delete(0,END)
-    riceEntry.delete(0,END)
-    oilEntry.delete(0,END)
-    sugarEntry.delete(0,END)
-    teaEntry.delete(0,END)
-
-    daalEntry.insert(0,0)
-    wheatEntry.insert(0,0)
-    riceEntry.insert(0,0)
-    oilEntry.insert(0,0)
-    sugarEntry.insert(0,0)
-    teaEntry.insert(0,0)
-
-    #drinks deletion & insertion
-    cococolaEntry.delete(0,END)
-    PepsiEntry.delete(0,END)
-    redbullEntry.delete(0,END)
-    spriteEntry.delete(0,END)
-    frootiEntry.delete(0,END)
-    fantaEntry.delete(0,END)
-
-    cococolaEntry.insert(0,0)
-    PepsiEntry.insert(0,0)
-    redbullEntry.insert(0,0)
-    spriteEntry.insert(0,0)
-    frootiEntry.insert(0,0)
-    fantaEntry.insert(0,0)
-
-    #taxs deletion
-    cosmetictaxEntry.delete(0,END)
-    grocerytaxEntry.delete(0, END)
-    drinkstaxEntry.delete(0, END)
-
-    #price deletion
-    cosmeticpriceEntry.delete(0, END)
-    grocerypriceEntry.delete(0, END)
-    drinkspriceEntry.delete(0, END)
-
-    #customer details deletion
-    nameEntry.delete(0, END)
-    phoneEntry.delete(0, END)
-    billnumberEntry.delete(0, END)
-
-    #bill area deletion
-    textarea.delete(1.0,END)
 
 if not os.path.exists('bills'):
     os.mkdir('bills')
@@ -112,6 +109,7 @@ def bill_area():
         messagebox.showerror('Error','No Products are selected')
     else:
         textarea.delete(1.0, END)
+
         textarea.insert(END, '\t\t** Welcome Customer **\n')
         textarea.insert(END, f'\nBill Number: {billnumber}\n')
         textarea.insert(END, f'\nCustomer Name: {nameEntry.get()}\n')
@@ -263,7 +261,7 @@ billnumberLabel.grid(row=0,column=4,padx=20,pady=2)
 billnumberEntry=Entry(customer_details_frame,font=('arial',15),bd=7,width=18)
 billnumberEntry.grid(row=0,column=5,padx=8)
 
-searchButton=Button(customer_details_frame,text='SEARCH',font=('arial',12,'bold'),bd=7,command=search_bill)
+searchButton=Button(customer_details_frame,text='SEARCH',font=('arial',12,'bold'),bd=7,width=10,command=search_bill)
 searchButton.grid(row=0,column=6,padx=20,pady=8)
 
 productsFrame=Frame(root)
@@ -479,13 +477,13 @@ totalButton.grid(row=0,column=0,pady=20,padx=5)
 billButton=Button(buttonFrame,text='Bill',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10,command=bill_area)
 billButton.grid(row=0,column=1,pady=20,padx=5)
 
-emailButton=Button(buttonFrame,text='Email',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10)
+emailButton=Button(buttonFrame,text='Email',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10,command=send_email)
 emailButton.grid(row=0,column=2,pady=20,padx=5)
 
 printButton=Button(buttonFrame,text='Print',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10,command=print_bill)
 printButton.grid(row=0,column=3,pady=20,padx=5)
 
-clearButton=Button(buttonFrame,text='Clear',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10,command=clear)
+clearButton=Button(buttonFrame,text='Clear',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10)
 clearButton.grid(row=0,column=4,pady=20,padx=5)
 
 

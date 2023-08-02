@@ -1,0 +1,35 @@
+		** Welcome Customer **
+
+Bill Number: 773
+
+Customer Name: customer
+
+Phone Number: 9027291384
+
+============================================================  Product			Quantity			Price
+============================================================
+  Bath Soap			01			20 Rs
+  Face Cream			01			50 Rs
+  Face Wash			01			40 Rs
+  Hair Spray			01			60 Rs
+  Hair Gel			01			45 Rs
+  Body Lotion			01			70 Rs
+  Rice			01			20 Rs
+  Daal			01			30 Rs
+  Oil			01			40 Rs
+  Sugar			01			60 Rs
+  Tea			01			35 Rs
+  Wheat			01			65 Rs
+  Fanta			01			30 Rs
+  Pepsi			01			35 Rs
+  Sprite			01			37 Rs
+  Red Bull			01			60 Rs
+  Frooti			01			40 Rs
+  Coco Cola			01			45 Rs
+------------------------------------------------------------
+  Cosmetic Tax				34.199999999999996Rs Rs
+  Grocery Tax				30.0Rs Rs
+  Drinks Tax				29.64Rs Rs
+------------------------------------------------------------
+  Total Bill 				875.84 Rs
+------------------------------------------------------------
