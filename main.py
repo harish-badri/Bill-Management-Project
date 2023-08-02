@@ -63,8 +63,6 @@ def send_email():
         sendButton.grid(row=2,column=0,pady=20)
 
         root1.mainloop()
-def print_bill():
-         os.startfile(file,'print')
 
 def search_bill():
     for i in os.listdir('bills/'):
