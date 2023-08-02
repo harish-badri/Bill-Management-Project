@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 import random,tempfile
 
+#search bar
 def search_bill():
     for i in os.listdir('bills/'):
         if i.split('.')[0] == billnumberEntry.get():
