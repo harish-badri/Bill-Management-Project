@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 import random,tempfile
 
+#email sender
 def send_email():
     def send_gmail():
         try:
@@ -64,6 +65,7 @@ def send_email():
 
         root1.mainloop()
 
+#search bar
 def search_bill():
     for i in os.listdir('bills/'):
         if i.split('.')[0] == billnumberEntry.get():
@@ -76,6 +78,7 @@ def search_bill():
     else:
         messagebox.showerror('Error','Invalid Bill Number')
 
+#print button
 def print_bill():
     if textarea.get(1.0,END)=='\n':
         messagebox.showerror('Error','Bill is empty')
@@ -84,6 +87,7 @@ def print_bill():
         open(file,'w').write(textarea.get(1.0,END))
         os.startfile(file,'print')
 
+#clear button
 def clear():
     #cosmetics deletion & insertion
     bathsoapEntry.delete(0,END)
@@ -148,6 +152,7 @@ def clear():
     #bill area deletion
     textarea.delete(1.0,END)
 
+# save button
 if not os.path.exists('bills'):
     os.mkdir('bills')
 def save_bill():
@@ -164,6 +169,7 @@ def save_bill():
 
 
 billnumber=random.randint(500,1000)
+#bill area
 def bill_area():
     if nameEntry.get()=='' or phoneEntry.get()=='':
         messagebox.showerror('Error','Customer Details are Required')
