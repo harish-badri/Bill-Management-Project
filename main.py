@@ -1,8 +1,68 @@
 import os
 from tkinter import *
 from tkinter import messagebox
-import random,tempfile
+import random,tempfile,smtplib
 
+def send_email():
+    def send_gmail():
+        try:
+             ob=smtplib.SMTP('smtp.gmail.com',587)
+             ob.starttls()
+             ob.login(senderEntry.get(),passwordEntry.get())
+             message=email_textarea.get(1.0,END)
+             ob.sendmail(senderEntry.get(),recievEntry.get(),message)
+             ob.quit()
+             messagebox.showinfo('Success','Bill is successfully sent',parent=root1)
+        except:
+             messagebox.showerror('Error','something went wrong,Please try again',parent=root1)
+    if textarea.get(1.0, END) == '\n':
+        messagebox.showerror('Error', 'Bill is empty')
+    else:
+        root1=Toplevel()
+        root1.title('Send gmail')
+        root1.config(bg='gray20')
+        root1.resizable(0,0)
+
+        senderFrame=LabelFrame(root1,text='SENDER',font=('arial',16,'bold'),bd=6,bg='gray20',fg='white')
+        senderFrame.grid(row=0,column=0,padx=40,pady=20)
+
+        senderLabel=Label(senderFrame,text="Email",font=('arial',14,'bold'),bd=6,bg='gray20',fg='white')
+        senderLabel.grid(row=0,column=0,padx=10,pady=8)
+
+        senderEntry=Entry(senderFrame,font=('arial',14,'bold'),bd=2,width=23,relief=RIDGE)
+        senderEntry.grid(row=0,column=1,padx=10,pady=8)
+
+
+        passwordLabel = Label(senderFrame, text="Password", font=('arial', 14, 'bold'), bd=6, bg='gray20', fg='white')
+        passwordLabel.grid(row=1, column=0, padx=10, pady=8)
+
+        passwordEntry = Entry(senderFrame, font=('arial', 14, 'bold'), bd=2, width=23, relief=RIDGE,show='*')
+        passwordEntry.grid(row=1, column=1, padx=10, pady=8)
+
+
+        recipientFrame = LabelFrame(root1, text='RECIPIENT', font=('arial', 16, 'bold'), bd=6, bg='gray20', fg='white')
+        recipientFrame.grid(row=1, column=0, padx=40, pady=20)
+
+
+        recievLabel = Label(recipientFrame, text="Email Address", font=('arial', 14, 'bold'), bd=6, bg='gray20', fg='white')
+        recievLabel.grid(row=0, column=0, padx=10, pady=8)
+
+        recievEntry = Entry(recipientFrame, font=('arial', 14, 'bold'), bd=2, width=23, relief=RIDGE)
+        recievEntry.grid(row=0, column=1, padx=10, pady=8)
+
+
+        messageLabel = Label(recipientFrame, text="Message", font=('arial', 14, 'bold'), bd=6, bg='gray20', fg='white')
+        messageLabel.grid(row=1, column=0, padx=10, pady=8)
+
+        email_textarea=Text(recipientFrame,font=('arial',14,'bold'),bd=2,relief=SUNKEN,width=42,height=11)
+        email_textarea.grid(row=2,column=0,columnspan=2)
+        email_textarea.delete(1.0,END)
+        email_textarea.insert(END,textarea.get(1.0,END).replace('=','').replace('-','').replace('\t\t\t','\t\t'))
+
+        sendButton=Button(root1,text='SEND',font=('arial',16,'bold'),width=15,command=send_gmail)
+        sendButton.grid(row=2,column=0,pady=20)
+
+        root1.mainloop()
 #search bar
 def search_bill():
     for i in os.listdir('bills/'):
@@ -480,7 +540,7 @@ totalButton.grid(row=0,column=0,pady=20,padx=5)
 billButton=Button(buttonFrame,text='Bill',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10,command=bill_area)
 billButton.grid(row=0,column=1,pady=20,padx=5)
 
-emailButton=Button(buttonFrame,text='Email',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10)
+emailButton=Button(buttonFrame,text='Email',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10,command=send_email)
 emailButton.grid(row=0,column=2,pady=20,padx=5)
 
 printButton=Button(buttonFrame,text='Print',font=('arial',16,'bold'),bg='gray20',fg='white',bd=5,width=8,pady=10,command=print_bill)
